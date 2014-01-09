@@ -96,6 +96,7 @@
 
 const unsigned char Message03[] = { "Tethealla Ship v.144" };
 
+#ifndef _WIN32
 void _itoa(int value, char *str, int base)
 {
 	if(base != 10) fprintf(stderr, "_itoa: base must be 10\n");
@@ -110,6 +111,7 @@ char * _strupr(char *old)
 	for(char *p=new; *p=toupper(*p); ++p);
 	return new;
 }
+#endif
 
 unsigned long mt_lrand(void)
 {
@@ -305,7 +307,9 @@ PSO_CRYPT* cipher_ptr;
 
 #define MYWM_NOTIFYICON (WM_USER+2)
 int program_hidden = 1;
-//HWND consoleHwnd;
+#ifdef _WIN32
+HWND consoleHwnd;
+#endif
 
 unsigned wstrlen ( unsigned short* dest )
 {
