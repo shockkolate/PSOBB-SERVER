@@ -1,0 +1,88 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "login_server", "..\login_server\login_server.vcxproj", "{4BD47319-9CFD-425B-A18C-FFFA7CA1DCFF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "patch_server", "..\patch_server\patch_server.vcxproj", "{A96833B9-9BB3-44FB-B73F-0F4AC20BB4FF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ship_server", "..\ship_server\ship_server.vcxproj", "{BB83F061-8262-489A-B804-637395B9F6F2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "account_add", "..\account_add\account_add.vcxproj", "{9FB9167E-8C29-435D-B022-BE368CF03A99}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "char_export", "..\char_export\char_export.vcxproj", "{F46BCE71-3F95-42F3-A667-5234D8567EAC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "convert_quest", "..\convert_quest\convert_quest.vcxproj", "{E6109BCC-F003-4519-8873-A8BD33434C61}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "convert_unitxt", "..\convert_unitxt\convert_unitxt.vcxproj", "{BCEDA7AB-12C6-49B0-AB17-5BB5AD1BBBA0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "make_key", "..\make_key\make_key.vcxproj", "{93B5A5B6-FE4B-46F2-BF9B-984497B50009}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "md5", "..\md5\md5.vcxproj", "{88C59BE5-B96D-4476-AA01-A5BA7C8DC2E9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mtwist", "..\mtwist\mtwist.vcxproj", "{DC65A794-CE8A-4F91-8655-3E1B34EDCB55}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "newtable", "..\newtable\newtable.vcxproj", "{12B1E708-3360-49B2-8760-9F4631EBDBE8}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "prs", "..\prs\prs.vcxproj", "{E0AC18FD-FF07-481B-A64C-DEF3AC2886F9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4BD47319-9CFD-425B-A18C-FFFA7CA1DCFF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4BD47319-9CFD-425B-A18C-FFFA7CA1DCFF}.Debug|Win32.Build.0 = Debug|Win32
+		{4BD47319-9CFD-425B-A18C-FFFA7CA1DCFF}.Release|Win32.ActiveCfg = Release|Win32
+		{4BD47319-9CFD-425B-A18C-FFFA7CA1DCFF}.Release|Win32.Build.0 = Release|Win32
+		{A96833B9-9BB3-44FB-B73F-0F4AC20BB4FF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A96833B9-9BB3-44FB-B73F-0F4AC20BB4FF}.Debug|Win32.Build.0 = Debug|Win32
+		{A96833B9-9BB3-44FB-B73F-0F4AC20BB4FF}.Release|Win32.ActiveCfg = Release|Win32
+		{A96833B9-9BB3-44FB-B73F-0F4AC20BB4FF}.Release|Win32.Build.0 = Release|Win32
+		{BB83F061-8262-489A-B804-637395B9F6F2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BB83F061-8262-489A-B804-637395B9F6F2}.Debug|Win32.Build.0 = Debug|Win32
+		{BB83F061-8262-489A-B804-637395B9F6F2}.Release|Win32.ActiveCfg = Release|Win32
+		{BB83F061-8262-489A-B804-637395B9F6F2}.Release|Win32.Build.0 = Release|Win32
+		{9FB9167E-8C29-435D-B022-BE368CF03A99}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9FB9167E-8C29-435D-B022-BE368CF03A99}.Debug|Win32.Build.0 = Debug|Win32
+		{9FB9167E-8C29-435D-B022-BE368CF03A99}.Release|Win32.ActiveCfg = Release|Win32
+		{9FB9167E-8C29-435D-B022-BE368CF03A99}.Release|Win32.Build.0 = Release|Win32
+		{F46BCE71-3F95-42F3-A667-5234D8567EAC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F46BCE71-3F95-42F3-A667-5234D8567EAC}.Debug|Win32.Build.0 = Debug|Win32
+		{F46BCE71-3F95-42F3-A667-5234D8567EAC}.Release|Win32.ActiveCfg = Release|Win32
+		{F46BCE71-3F95-42F3-A667-5234D8567EAC}.Release|Win32.Build.0 = Release|Win32
+		{E6109BCC-F003-4519-8873-A8BD33434C61}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E6109BCC-F003-4519-8873-A8BD33434C61}.Debug|Win32.Build.0 = Debug|Win32
+		{E6109BCC-F003-4519-8873-A8BD33434C61}.Release|Win32.ActiveCfg = Release|Win32
+		{E6109BCC-F003-4519-8873-A8BD33434C61}.Release|Win32.Build.0 = Release|Win32
+		{BCEDA7AB-12C6-49B0-AB17-5BB5AD1BBBA0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BCEDA7AB-12C6-49B0-AB17-5BB5AD1BBBA0}.Debug|Win32.Build.0 = Debug|Win32
+		{BCEDA7AB-12C6-49B0-AB17-5BB5AD1BBBA0}.Release|Win32.ActiveCfg = Release|Win32
+		{BCEDA7AB-12C6-49B0-AB17-5BB5AD1BBBA0}.Release|Win32.Build.0 = Release|Win32
+		{93B5A5B6-FE4B-46F2-BF9B-984497B50009}.Debug|Win32.ActiveCfg = Debug|Win32
+		{93B5A5B6-FE4B-46F2-BF9B-984497B50009}.Debug|Win32.Build.0 = Debug|Win32
+		{93B5A5B6-FE4B-46F2-BF9B-984497B50009}.Release|Win32.ActiveCfg = Release|Win32
+		{93B5A5B6-FE4B-46F2-BF9B-984497B50009}.Release|Win32.Build.0 = Release|Win32
+		{88C59BE5-B96D-4476-AA01-A5BA7C8DC2E9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{88C59BE5-B96D-4476-AA01-A5BA7C8DC2E9}.Debug|Win32.Build.0 = Debug|Win32
+		{88C59BE5-B96D-4476-AA01-A5BA7C8DC2E9}.Release|Win32.ActiveCfg = Release|Win32
+		{88C59BE5-B96D-4476-AA01-A5BA7C8DC2E9}.Release|Win32.Build.0 = Release|Win32
+		{DC65A794-CE8A-4F91-8655-3E1B34EDCB55}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DC65A794-CE8A-4F91-8655-3E1B34EDCB55}.Debug|Win32.Build.0 = Debug|Win32
+		{DC65A794-CE8A-4F91-8655-3E1B34EDCB55}.Release|Win32.ActiveCfg = Release|Win32
+		{DC65A794-CE8A-4F91-8655-3E1B34EDCB55}.Release|Win32.Build.0 = Release|Win32
+		{12B1E708-3360-49B2-8760-9F4631EBDBE8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{12B1E708-3360-49B2-8760-9F4631EBDBE8}.Debug|Win32.Build.0 = Debug|Win32
+		{12B1E708-3360-49B2-8760-9F4631EBDBE8}.Release|Win32.ActiveCfg = Release|Win32
+		{12B1E708-3360-49B2-8760-9F4631EBDBE8}.Release|Win32.Build.0 = Release|Win32
+		{E0AC18FD-FF07-481B-A64C-DEF3AC2886F9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E0AC18FD-FF07-481B-A64C-DEF3AC2886F9}.Debug|Win32.Build.0 = Debug|Win32
+		{E0AC18FD-FF07-481B-A64C-DEF3AC2886F9}.Release|Win32.ActiveCfg = Release|Win32
+		{E0AC18FD-FF07-481B-A64C-DEF3AC2886F9}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
