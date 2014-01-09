@@ -11,6 +11,7 @@
 #ifdef _WIN32
 #define NO_ALIGN __declspec(align(1))
 #define NO_ALIGN_END
+#include <Windows.h>
 #endif /* _WIN32 */
 
 #ifdef __linux__
