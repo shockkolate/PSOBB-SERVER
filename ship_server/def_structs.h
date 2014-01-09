@@ -1,4 +1,4 @@
-#define NO_ALIGN __declspec(align(1))
+#include "common.h"
 
 typedef struct NO_ALIGN st_ptdata
 {
@@ -22,7 +22,7 @@ typedef struct NO_ALIGN st_ptdata
 	char enemy_drop[100];
 	unsigned short box_meseta[10][2];
 	unsigned char reserved[0x1000-0x8C8];
-} PTDATA;
+} NO_ALIGN_END PTDATA;
 
 /* Ban Structure */
 
@@ -65,7 +65,7 @@ typedef struct NO_ALIGN st_weappmt
 	unsigned char special_type;
 	unsigned char ataadd;
 	unsigned char unknown4[14];
-} weappmt;
+} NO_ALIGN_END weappmt;
 
 
 /* Armor pmt structure */
@@ -93,7 +93,7 @@ typedef struct NO_ALIGN st_armorpmt
 	unsigned char evp_var;
 	short u4;
 	short u5;
-} armorpmt;
+} NO_ALIGN_END armorpmt;
 
 
 /* Battle parameter structure */
@@ -112,7 +112,7 @@ typedef struct NO_ALIGN st_battleparam {
 	unsigned reserved3;
 	unsigned XP;
 	unsigned reserved4;
-} BATTLEPARAM;
+} NO_ALIGN_END BATTLEPARAM;
 
 
 /* Character Data Structure */
@@ -127,7 +127,7 @@ typedef struct NO_ALIGN st_playerLevel {
 	unsigned char LCK;
 	unsigned char TP;
 	unsigned XP;
-} playerLevel;
+} NO_ALIGN_END playerLevel;
 
 
 /* Mag Structure */
@@ -147,16 +147,16 @@ typedef struct NO_ALIGN st_mag
 	unsigned char IQ;
 	unsigned char PBflags;
 	unsigned char color;
-} MAG;
+} NO_ALIGN_END MAG;
 
 
 /* Item Structure (Without Flags) */
 
 typedef struct NO_ALIGN st_item {
 	unsigned char data[12]; // the standard $setitem1 - $setitem3 fare
-	unsigned itemid; // player item id
+	unsigned long itemid; // player item id
 	unsigned char data2[4]; // $setitem4 (mag use only)
-} ITEM;
+} NO_ALIGN_END ITEM;
 
 
 /* Bank Item Structure */
@@ -166,7 +166,7 @@ typedef struct NO_ALIGN st_bank_item {
 	unsigned itemid; // player item id
 	unsigned char data2[4]; // $setitem4 (mag use only)
 	unsigned bank_count; // Why?
-} BANK_ITEM;
+} NO_ALIGN_END BANK_ITEM;
 
 /* Bank Structure */
 
@@ -174,7 +174,7 @@ typedef struct NO_ALIGN st_bank {
 	unsigned bankUse;
 	unsigned bankMeseta;
 	BANK_ITEM bankInventory [200];
-} BANK;
+} NO_ALIGN_END BANK;
 
 
 /* Item Structure (Includes Flags) */
@@ -182,9 +182,9 @@ typedef struct NO_ALIGN st_bank {
 typedef struct NO_ALIGN st_inventory_item {
 	unsigned char in_use; // 0x01 = item slot in use, 0xFF00 = unused
 	unsigned char reserved[3];
-	unsigned flags; // 8 = equipped
+	unsigned long flags; // 8 = equipped
 	ITEM item;
-} INVENTORY_ITEM;
+} NO_ALIGN_END INVENTORY_ITEM;
 
 
 /* Game Inventory Item Structure */
@@ -192,7 +192,7 @@ typedef struct NO_ALIGN st_inventory_item {
 typedef struct NO_ALIGN st_game_item {
 	unsigned gm_flag; // reserved
 	ITEM item;
-} GAME_ITEM;
+} NO_ALIGN_END GAME_ITEM;
 
 
 /* Main Character Structure */
@@ -291,7 +291,7 @@ typedef struct NO_ALIGN st_chardata {
 	unsigned unknown15; // 0x3194 - 0x3197
 	unsigned char teamFlag[2048]; // 0x3198 - 0x3997
 	unsigned char teamRewards[8]; // 0x3998 - 0x39A0
-} CHARDATA;
+} NO_ALIGN_END CHARDATA;
 
 
 /* Connected Client Structure */
@@ -451,7 +451,7 @@ typedef struct NO_ALIGN st_shopitem {
 	unsigned char data[12];
 	unsigned reserved3;
 	unsigned price;
-} SHOP_ITEM;
+} NO_ALIGN_END SHOP_ITEM;
 
 
 /* Shop Structure */
@@ -466,7 +466,7 @@ typedef struct NO_ALIGN st_shop {
 	unsigned short reserved2;
 	SHOP_ITEM item[0x18];
 	unsigned char reserved4[16];
-} SHOP;
+} NO_ALIGN_END SHOP;
 
 
 /* Map Monster Structure */
@@ -480,7 +480,7 @@ typedef struct NO_ALIGN st_mapmonster {
 	unsigned exp; // 4
 	unsigned skin; // 4
 	unsigned rt_index;  // 4
-} MAP_MONSTER;
+} NO_ALIGN_END MAP_MONSTER;
 
 
 /* Map box structure */

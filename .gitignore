@@ -1,3 +1,4 @@
-login_server/Debug/
+*.o
 *.sdf
-*/Debug/
+*/Debug
+ship_server
