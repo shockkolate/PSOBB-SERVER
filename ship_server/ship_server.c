@@ -15,10 +15,14 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ************************************************************************/
 
+#ifdef _WIN32
 #define reveal_window \
 	ShowWindow ( consoleHwnd, SW_NORMAL ); \
 	SetForegroundWindow ( consoleHwnd ); \
 	SetFocus ( consoleHwnd )
+#else
+#define reveal_window
+#endif
 
 #define swapendian(x) ( ( x & 0xFF ) << 8 ) + ( x >> 8 )
 #define FLOAT_PRECISION 0.00001
@@ -77,11 +81,7 @@
 #define	MALE_FLAG	64  // Bit 7
 #define	FEMALE_FLAG	128 // Bit 8
 
-#include	<windows.h>
-#include	<stdio.h>
-#include	<string.h>
-#include	<time.h>
-#include	<math.h>
+#include	"common.h"
 
 #include	"resource.h"
 #include	"pso_crypt.h"
@@ -95,6 +95,26 @@
 #include	"def_tables.h" // Various pre-made table definitions
 
 const unsigned char Message03[] = { "Tethealla Ship v.144" };
+
+void _itoa(int value, char *str, int base)
+{
+	if(base != 10) fprintf(stderr, "_itoa: base must be 10\n");
+	sprintf(str, "%d", value);
+}
+
+char * _strupr(char *old)
+{
+	char *new = malloc(strlen(old) + 1);
+	strcpy(new, old);
+
+	for(char *p=new; *p=toupper(*p); ++p);
+	return new;
+}
+
+unsigned long mt_lrand(void)
+{
+	return rand();
+}
 
 /* function defintions */
 
@@ -285,7 +305,7 @@ PSO_CRYPT* cipher_ptr;
 
 #define MYWM_NOTIFYICON (WM_USER+2)
 int program_hidden = 1;
-HWND consoleHwnd;
+//HWND consoleHwnd;
 
 unsigned wstrlen ( unsigned short* dest )
 {
@@ -656,7 +676,7 @@ void load_config_file()
 								gets(&dp[0]);
 								exit (1);
 							}
-							*(unsigned *) &loginIP[0] = *(unsigned *) IP_host->h_addr;
+							*(unsigned long *) &loginIP[0] = *(unsigned long *) IP_host->h_addr;
 						}
 						else
 							convertIPString (&config_data[0], ch+1, 1, &loginIP[0] );
@@ -929,7 +949,7 @@ void initialize_logon()
 void reconnect_logon()
 {
 	// Just in case this is called because of an error in communication with the logon server.
-	logon->sockfd = tcp_sock_connect (  inet_ntoa (logon->_ip), 3455 );
+	logon->sockfd = tcp_sock_connect (inet_ntoa (logon->_ip), 3455 );
 	if (logon->sockfd >= 0)
 	{
 		printf ("Connection successful!\n");
@@ -9095,7 +9115,7 @@ void Send60 (BANANA* client)
 			if ( ( client->lobbyNum > 0x0F ) && ( client->decryptbuf[0x0A] == client->clientID ) )
 			{
 				INVENTORY_ITEM work_item, work_item2;
-				unsigned ci, ai,
+				unsigned long ci, ai,
 					compare_itemid = 0, compare_item1 = 0, compare_item2 = 0, num_attribs = 0;
 				char attrib_add;
 
@@ -9163,7 +9183,7 @@ void Send60 (BANANA* client)
 							if (ai)
 							{
 								// Attribute already on weapon, increase it
-								(char) work_item2.item.data[ai] += attrib_add;
+								work_item2.item.data[ai] += (char)attrib_add;
 								if (work_item2.item.data[ai] > 100)
 									work_item2.item.data[ai] = 100;
 							}
@@ -9173,7 +9193,7 @@ void Send60 (BANANA* client)
 								if (num_attribs < 3)
 								{
 									work_item2.item.data[6 + (num_attribs * 2)] = client->decryptbuf[0x24];
-									(char) work_item2.item.data[7 + (num_attribs * 2)] = attrib_add;
+									work_item2.item.data[7 + (num_attribs * 2)] = (char)attrib_add;
 								}
 							}
 							DeleteItemFromClient ( work_item2.item.itemid, 1, 0, client );
@@ -9578,7 +9598,7 @@ void GenerateRandomAttributes (unsigned char sid, GAME_ITEM* i, LOBBY* l, BANANA
 					percent = percent_patterns_ep1[sid][l->difficulty][ptd->area_pattern[area]][mt_lrand() % 4096];
 				percent -= 2;
 				percent *= 5;
-				(char) i->item.data[6+(num_percents*2)+1] = percent;
+				i->item.data[6+(num_percents*2)+1] = (char)percent;
 				num_percents++;
 			}
 		}
@@ -9842,7 +9862,7 @@ void GenerateCommonItem (int item_type, int is_enemy, unsigned char sid, GAME_IT
 					percent = percent_patterns_ep1[sid][l->difficulty][ptd->area_pattern[area]][mt_lrand() % 4096];
 				percent -= 2;
 				percent *= 5;
-				(char) i->item.data[6+(num_percents*2)+1] = percent;
+				i->item.data[6+(num_percents*2)+1] = (char)percent;
 				num_percents++;
 			}
 		}
@@ -10534,11 +10554,11 @@ void Send62 (BANANA* client)
 								else
 									percent_mod = 0;
 					if ((!(i->item.data[6] & 128)) && (i->item.data[7] > 0))
-						(char)client->tekked.item.data[7] += percent_mod;
+						client->tekked.item.data[7] += (char)percent_mod;
 					if ((!(i->item.data[8] & 128)) && (i->item.data[9] > 0))
-						(char)client->tekked.item.data[9] += percent_mod;
+						client->tekked.item.data[9] += (char)percent_mod;
 					if ((!(i->item.data[10] & 128)) && (i->item.data[11] > 0))
-						(char)client->tekked.item.data[11] += percent_mod;
+						client->tekked.item.data[11] += (char)percent_mod;
 					DeleteMesetaFromClient (100, 0, client);
 					memset (&client->encryptbuf[0x00], 0, 0x20);
 					client->encryptbuf[0x00] = 0x20;
@@ -11108,7 +11128,7 @@ void Send6D (BANANA* client)
 							{
 								if ((char) client->decryptbuf[0xC4+ch] > max_tech_level[ch][client->character._class])
 								{
-									(char) client->character.techniques[ch] = -1; // Unlearn broken technique.
+									client->character.techniques[ch] = (char)-1; // Unlearn broken technique.
 									client->todc = 1;
 								}
 							}
@@ -11212,7 +11232,7 @@ char* Unicode_to_ASCII (unsigned short* ucs)
 void WriteLog(char *fmt, ...)
 {
 #define MAX_GM_MESG_LEN 4096
-
+#ifdef _WIN32
 	va_list args;
 	char text[ MAX_GM_MESG_LEN ];
 	SYSTEMTIME rawtime;
@@ -11236,13 +11256,14 @@ void WriteLog(char *fmt, ...)
 
 	printf ("[%02u-%02u-%u, %02u:%02u] %s", rawtime.wMonth, rawtime.wDay, rawtime.wYear, 
 		rawtime.wHour, rawtime.wMinute, text);
+#endif
 }
 
 
 void WriteGM(char *fmt, ...)
 {
 #define MAX_GM_MESG_LEN 4096
-
+#ifdef _WIN32
 	va_list args;
 	char text[ MAX_GM_MESG_LEN ];
 	SYSTEMTIME rawtime;
@@ -11266,6 +11287,7 @@ void WriteGM(char *fmt, ...)
 
 	printf ("[%02u-%02u-%u, %02u:%02u] %s", rawtime.wMonth, rawtime.wDay, rawtime.wYear, 
 		rawtime.wHour, rawtime.wMinute, text);
+#endif
 }
 
 
@@ -13322,7 +13344,7 @@ void PromoteTeamMember ( unsigned teamid, unsigned guildcard, unsigned char newl
 	ship->encryptbuf[0x01] = 0x06;
 	*(unsigned*) &ship->encryptbuf[0x02] = teamid;
 	*(unsigned*) &ship->encryptbuf[0x06] = guildcard;
-	(unsigned char) ship->encryptbuf[0x0A] = newlevel;
+	ship->encryptbuf[0x0A] = (unsigned char)newlevel;
 	compressShipPacket ( ship, &ship->encryptbuf[0x00], 0x0B );
 }
 
@@ -14938,6 +14960,7 @@ void LoadShopData2()
 	fclose (fp);
 }
 
+#ifdef _WIN32
 LRESULT CALLBACK WndProc( HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam )
 {
 	if(message == MYWM_NOTIFYICON)
@@ -14966,6 +14989,7 @@ LRESULT CALLBACK WndProc( HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam 
 	}
 	return DefWindowProc( hwnd, message, wParam, lParam );
 }
+#endif
 
 /********************************************************
 **
@@ -14989,7 +15013,9 @@ int main()
 	int ship_sockfd = -1;
 	int pkt_len, pkt_c, bytes_sent;
 	int wserror;
+#ifdef _WIN32
 	WSADATA winsock_data;
+#endif
 	FILE* fp;
 	unsigned char* connectionChunk;
 	unsigned char* connectionPtr;
@@ -14997,14 +15023,17 @@ int main()
 	unsigned char* blockChunk;
 	//unsigned short this_packet;
 	unsigned long logon_this_packet;
+#ifdef _WIN32
 	HINSTANCE hinst;
-    NOTIFYICONDATA nid = {0};
+	NOTIFYICONDATA nid = {0};
 	WNDCLASS wc = {0};
 	HWND hwndWindow;
 	MSG msg;
+#endif
 		
 	ch = 0;
 
+#ifdef _WIN32
 	consoleHwnd = GetConsoleWindow();
 	hinst = GetModuleHandle(NULL);
 
@@ -15014,13 +15043,14 @@ int main()
 	strcat (&dp[0], SERVER_VERSION );
 	strcat (&dp[0], " coded by Sodaboy");
 	SetConsoleTitle (&dp[0]);
+#endif
 
 	printf ("\nTethealla Ship Server version %s  Copyright (C) 2008  Terry Chatman Jr.\n", SERVER_VERSION);
 	printf ("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
 	printf ("This program comes with ABSOLUTELY NO WARRANTY; for details\n");
 	printf ("see section 15 in gpl-3.0.txt\n");
-    printf ("This is free software, and you are welcome to redistribute it\n");
-    printf ("under certain conditions; see gpl-3.0.txt for details.\n");
+	printf ("This is free software, and you are welcome to redistribute it\n");
+	printf ("under certain conditions; see gpl-3.0.txt for details.\n");
 
 	/*for (ch=0;ch<5;ch++)
 	{
@@ -15029,7 +15059,9 @@ int main()
 	}*/
 	printf ("\n\n");
 
+#ifdef _WIN32
 	WSAStartup(MAKEWORD(1,1), &winsock_data);
+#endif
 	
 	printf ("Loading configuration from ship.ini ... ");
 #ifdef LOG_60
@@ -15042,7 +15074,8 @@ int main()
 		exit(1);
 	}
 #endif
-	mt_bestseed();
+	//mt_bestseed();
+	srand(time(NULL));
 	load_config_file();
 	printf ("OK!\n\n");
 
@@ -15748,6 +15781,7 @@ int main()
 	}
 
 	printf ("\nListening...\n");
+#ifdef _WIN32
 	wc.hbrBackground =(HBRUSH)GetStockObject(WHITE_BRUSH);
 	wc.hIcon = LoadIcon( hinst, IDI_APPLICATION );
 	wc.hCursor = LoadCursor( hinst, IDC_ARROW );
@@ -15790,19 +15824,19 @@ int main()
 	strcat (&nid.szTip[0], SERVER_VERSION);
 	strcat (&nid.szTip[0], " - Double click to show/hide");
     Shell_NotifyIcon(NIM_ADD, &nid);
-
+#endif
 	for (;;)
 	{
 		int nfds = 0;
 
 		/* Process the system tray icon */
-
+#ifdef _WIN32
 		if ( PeekMessage( &msg, hwndWindow, 0, 0, 1 ) )
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-
+#endif
 
 		/* Ping pong?! */
 
@@ -16137,9 +16171,11 @@ int main()
 
 					if (bytes_sent == SOCKET_ERROR)
 					{
-						wserror = WSAGetLastError();
 						printf ("Could not send data to logon server...\n");
+#ifdef _WIN32
+						wserror = WSAGetLastError();
 						printf ("Socket Error %u.\n", wserror );
+#endif
 						initialize_logon();
 						printf ("Lost connection with the logon server...\n");
 						printf ("Reconnect in %u seconds...\n", LOGIN_RECONNECT_SECONDS);
@@ -16156,9 +16192,11 @@ int main()
 					// Read shit.
 					if ( ( pkt_len = recv (logon->sockfd, &tmprcv[0], PACKET_BUFFER_SIZE - 1, 0) ) <= 0 )
 					{
-						wserror = WSAGetLastError();
 						printf ("Could not read data from logon server...\n");
+#ifdef _WIN32
+						wserror = WSAGetLastError();
 						printf ("Socket Error %u.\n", wserror );
+#endif
 						initialize_logon();
 						printf ("Lost connection with the logon server...\n");
 						printf ("Reconnect in %u seconds...\n", LOGIN_RECONNECT_SECONDS);
