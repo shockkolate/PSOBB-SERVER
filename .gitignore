@@ -1,2 +1,4 @@
 *.o
+*.sdf
+*/Debug
 ship_server
