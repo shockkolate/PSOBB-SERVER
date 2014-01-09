@@ -96,6 +96,26 @@
 
 const unsigned char Message03[] = { "Tethealla Ship v.144" };
 
+void _itoa(int value, char *str, int base)
+{
+	if(base != 10) fprintf(stderr, "_itoa: base must be 10\n");
+	sprintf(str, "%d", value);
+}
+
+char * _strupr(char *old)
+{
+	char *new = malloc(strlen(old) + 1);
+	strcpy(new, old);
+
+	for(char *p=new; *p=toupper(*p); ++p);
+	return new;
+}
+
+unsigned long mt_lrand(void)
+{
+	return rand();
+}
+
 /* function defintions */
 
 extern void	mt_bestseed(void);
@@ -15054,7 +15074,8 @@ int main()
 		exit(1);
 	}
 #endif
-	mt_bestseed();
+	//mt_bestseed();
+	srand(time(NULL));
 	load_config_file();
 	printf ("OK!\n\n");
 
@@ -16150,9 +16171,11 @@ int main()
 
 					if (bytes_sent == SOCKET_ERROR)
 					{
-						wserror = WSAGetLastError();
 						printf ("Could not send data to logon server...\n");
+#ifdef _WIN32
+						wserror = WSAGetLastError();
 						printf ("Socket Error %u.\n", wserror );
+#endif
 						initialize_logon();
 						printf ("Lost connection with the logon server...\n");
 						printf ("Reconnect in %u seconds...\n", LOGIN_RECONNECT_SECONDS);
@@ -16169,9 +16192,11 @@ int main()
 					// Read shit.
 					if ( ( pkt_len = recv (logon->sockfd, &tmprcv[0], PACKET_BUFFER_SIZE - 1, 0) ) <= 0 )
 					{
-						wserror = WSAGetLastError();
 						printf ("Could not read data from logon server...\n");
+#ifdef _WIN32
+						wserror = WSAGetLastError();
 						printf ("Socket Error %u.\n", wserror );
+#endif
 						initialize_logon();
 						printf ("Lost connection with the logon server...\n");
 						printf ("Reconnect in %u seconds...\n", LOGIN_RECONNECT_SECONDS);
